@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trans Route</string>
+    <string name="source">Orígen</string>
+    <string name="destination">Destino</string>
+    <string name="calculate">Calcular ruta</string>
+    
+    <string name="expandable_list_sample_action">Sample action</string>
+</resources>
