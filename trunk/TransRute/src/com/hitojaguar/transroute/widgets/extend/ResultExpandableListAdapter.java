@@ -35,7 +35,7 @@ public class ResultExpandableListAdapter extends BaseExpandableListAdapter {
     public TextView getGenericView() {
         // Layout parameters for the ExpandableListView
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, 64);
+                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         TextView textView = new TextView(mParent);
         textView.setLayoutParams(lp);
