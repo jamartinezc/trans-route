@@ -32,25 +32,14 @@ public class ResultExpandableListAdapter extends BaseExpandableListAdapter {
         return mResult.getPath()[groupPosition].length;
     }
 
-    public TextView getGenericView() {
-        // Layout parameters for the ExpandableListView
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        TextView textView = new TextView(mParent);
-        textView.setLayoutParams(lp);
-        // Center the text vertically
-        textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        // Set the text starting position
-        textView.setPadding(36, 0, 0, 0);
-        return textView;
-    }
-
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-            View convertView, ViewGroup parent) {
-        TextView textView = getGenericView();
-        textView.setText(getChild(groupPosition, childPosition).toString());
-        return textView;
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        IRouteResultViewCreator rc = new RouteResultViewCreator();
+        View childView = rc.getResultView(mParent, null, getChild(groupPosition, childPosition).toString(), true);
+        childView.setLayoutParams(lp);
+        
+        return childView;
     }
 
     public Object getGroup(int groupPosition) {
@@ -65,11 +54,14 @@ public class ResultExpandableListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-            ViewGroup parent) {
-        TextView textView = getGenericView();
-        textView.setText(getGroup(groupPosition).toString());
-        return textView;
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        IRouteResultViewCreator rc = new RouteResultViewCreator();
+        View groupView = rc.getResultView(mParent, null, getGroup(groupPosition).toString(), false);
+        groupView.setLayoutParams(lp);
+        
+        return groupView;
     }
 
     public boolean isChildSelectable(int groupPosition, int childPosition) {
@@ -80,4 +72,7 @@ public class ResultExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    public void changeResult(Result result){
+    	mResult = result;
+    }
 }
