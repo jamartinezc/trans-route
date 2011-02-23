@@ -1,0 +1,21 @@
+B90&nbsp;&nbsp;
+Domingos y Festivos de 6:00 am a 10:00 pm
+G90&nbsp;&nbsp;
+Domingos y Festivos de 6:00 am a 10:00 pm
+Portal Sur,
+Venecia,
+Alquería,
+General Santander,
+Sena,
+Santa Isabel,
+Ricaurte,
+Cad,
+Av. El Dorado,
+Campín,
+NQS - Cl 75,
+La Castellana,
+Cl 100,
+Prado,
+Alcalá,
+Cl 146,
+Portal Norte,
