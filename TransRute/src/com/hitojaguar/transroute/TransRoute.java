@@ -37,7 +37,7 @@ public class TransRoute extends Activity {
 		mExpandList.setAdapter(mExpandListAdapter);
 
 		EditText editSource = (EditText) findViewById(R.id.source);
-		EditText editDestination = (EditText) findViewById(R.id.destination);
+		EditText editDestination = (EditText) findViewById(R.id.destination );
 		
 		editSource.setText(source);
 		editDestination.setText(destin);
