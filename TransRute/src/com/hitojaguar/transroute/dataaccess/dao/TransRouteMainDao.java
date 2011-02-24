@@ -37,23 +37,16 @@ public class TransRouteMainDao {
     public static final String KEY_BODY = "body";
     public static final String KEY_ROWID = "_id";
 
-    private static final String TAG = "NotesDbAdapter";
-    private DatabaseHelper mDbHelper;
-    private SQLiteDatabase mDb;
+    protected static final String TAG = "NotesDbAdapter";
+    protected DatabaseHelper mDbHelper;
+    protected SQLiteDatabase mDb;
+    
+    protected static final String DB_NAME = "TransRouteDB";
+    protected static final String DB_PATH = "/data/data/com.hitojaguar.transroute/databases/";
+    protected static final String DATABASE_TABLE = "notes";
+    protected static final int DATABASE_VERSION = 1;
 
-    /**
-     * Database creation sql statement
-     */
-    private static final String DATABASE_CREATE =
-        "create table notes (_id integer primary key autoincrement, "
-        + "title text not null, body text not null);";
-
-    private static final String DB_NAME = "TransRouteDB";
-    private static final String DB_PATH = "/data/data/com.hitojaguar.transroute/databases/";
-    private static final String DATABASE_TABLE = "notes";
-    private static final int DATABASE_VERSION = 1;
-
-    private final Context mCtx;
+    protected final Context mCtx;
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
     	
@@ -151,7 +144,7 @@ public class TransRouteMainDao {
      
         	//Open the database
             String myPath = DB_PATH + DB_NAME;
-        	myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        	myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
      
         }
      
@@ -207,7 +200,8 @@ public class TransRouteMainDao {
      */
     public TransRouteMainDao open() throws SQLException {
         mDbHelper = new DatabaseHelper(mCtx);
-        mDb = mDbHelper.getWritableDatabase();
+        mDbHelper.openDataBase();
+        mDb = mDbHelper.myDataBase;
         return this;
     }
 
