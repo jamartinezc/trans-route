@@ -8,11 +8,11 @@ public class StationDao {
 	
 	private TransRouteMainDao mTRdao;
 
-	private static final String DATABASE_TABLE = "station";
-	private static final String KEY_ROWID = "_id";
-	private static final String KEY_NAME = "name";
-	private static final String KEY_LAT = "gps_latitude";
-	private static final String KEY_LON = "gps_longitude";
+	public static final String DATABASE_TABLE = "station";
+	public static final String KEY_ROWID = "_id";
+	public static final String KEY_NAME = "name";
+	public static final String KEY_LAT = "gps_latitude";
+	public static final String KEY_LON = "gps_longitude";
 
 	public StationDao(TransRouteMainDao mTRdao) {
 		super();
@@ -67,6 +67,24 @@ public class StationDao {
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
+        return mCursor;
+
+    }
+    
+
+    /**
+     * Return a Cursor over the list of all Stations in the database with the given name.
+     * @param name the station's name
+     * 
+     * @return Cursor over all Stations with the given name
+     */
+    public Cursor fetchStations(String name) throws SQLException {
+
+        Cursor mCursor =
+
+            mTRdao.mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
+                    KEY_NAME, KEY_LAT, KEY_LON}, KEY_NAME + "=" + name, null,
+                    null, null, null, null);
         return mCursor;
 
     }
