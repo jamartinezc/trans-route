@@ -41,9 +41,12 @@ public class RouteDao {
             rowValues.put(WAIT_COST, routeStation.getWaitCost());
             rowValues.put(ID_ROUTE, routeId);
 
-            routeStation.getNameStation();
             StationDao sDao = new StationDao(mTRdao);
             Cursor station = sDao.fetchStations(routeStation.getNameStation());
+            if (station.getCount() == 0){
+            	sDao.createStation(routeStation.getNameStation(), "0", "0");
+            	station = sDao.fetchStations(routeStation.getNameStation());
+            }
             int stationIdIndex = station.getColumnIndexOrThrow(StationDao.KEY_ROWID);
             long stationId = station.getLong(stationIdIndex);
             
@@ -60,7 +63,6 @@ public class RouteDao {
     public Cursor fetchAllRoutes() {
 
     	return mTRdao.mDb.rawQuery("select route.name as "+KEY_ROUTE_NAME+",station.name as "+KEY_STATION_NAME+" from route, route_station, station where route._id = route_station._id_route and route_station._id_station=station._id order by route._id,route_station.order_num", null);
-//        return mTRdao.mDb.query(ROUTE_STATION_TABLE, new String[] {KEY_ROWID, KEY_NAME, KEY_LAT,KEY_LAT}, null, null, null, null, null);
     }
 	
 }
