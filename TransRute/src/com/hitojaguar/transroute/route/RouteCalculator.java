@@ -3,12 +3,51 @@ package com.hitojaguar.transroute.route;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
+import android.content.Context;
+import android.database.Cursor;
+
+import com.hitojaguar.transroute.dataaccess.dao.RouteDao;
+import com.hitojaguar.transroute.dataaccess.dao.StationDao;
 import com.hitojaguar.transroute.entities.Result;
 
 public class RouteCalculator implements IRouteCalculator {
 
+	public RouteCalculator(Context ctx) {
+		RouteDao rDao = new RouteDao(ctx);
+		Cursor routeC =rDao.fetchAllRoutes();
+		
+		LinkedList<String[]> resList = new LinkedList<String[]>();
+		String prevRoute=null;
+		LinkedList<String> stationList = new LinkedList<String>();
+		while(routeC.moveToNext()){
+			int rowRoute = routeC.getColumnIndex(RouteDao.KEY_ROUTE_NAME);
+			int rowStation = routeC.getColumnIndex(RouteDao.KEY_STATION_NAME);
+
+			String route = routeC.getString(rowRoute);
+			String station = routeC.getString(rowStation);
+			
+			if(prevRoute != null && prevRoute.equalsIgnoreCase(route)){
+				stationList.add(station);
+			}else{
+				if(prevRoute != null){
+					String[] currStationsArray = stationList.toArray(new String[0]);
+					resList.add(currStationsArray);
+				}
+				stationList = new LinkedList<String>();
+				stationList.add(route);
+				stationList.add(station);
+			}
+			prevRoute = route;
+		}
+		String[] currStationsArray = stationList.toArray(new String[0]);
+		resList.add(currStationsArray);
+		
+		routes = resList.toArray(new String[0][0]); 	
+	}
+	
 	private List<int[]> findR(String from, String to) {
 		List<int[]> starts = findStart(from);
 		List<int[]> solutions = new ArrayList<int[]>();

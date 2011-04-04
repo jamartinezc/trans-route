@@ -1,6 +1,9 @@
 package com.hitojaguar.transroute;
 
+import java.io.IOException;
+
 import android.app.Activity;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
+import com.hitojaguar.transroute.dataaccess.dao.TransRouteMainDao;
 import com.hitojaguar.transroute.entities.Result;
 import com.hitojaguar.transroute.route.IRouteCalculator;
 import com.hitojaguar.transroute.route.RouteCalculator;
@@ -19,6 +23,7 @@ public class TransRoute extends Activity {
     private static final String RES = "r";
 	private ExpandableListView mExpandList;
 	private ResultExpandableListAdapter mExpandListAdapter;
+	private TransRouteMainDao mDao;
 	
 	private Result mResult;
 
@@ -56,6 +61,17 @@ public class TransRoute extends Activity {
             	mExpandListAdapter.notifyDataSetChanged();
             }
         });
+		
+		mDao = TransRouteMainDao.getInstance(this);
+		try {
+			mDao.open();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 	@Override
@@ -84,7 +100,7 @@ public class TransRoute extends Activity {
 	}
     
     private void findRoute(String source, String destination) {
-    	IRouteCalculator rc = new RouteCalculator();
+    	IRouteCalculator rc = new RouteCalculator(this);
     	mResult = rc.FindRoutes(source, destination);
     	mExpandListAdapter.changeResult(mResult);
     }
