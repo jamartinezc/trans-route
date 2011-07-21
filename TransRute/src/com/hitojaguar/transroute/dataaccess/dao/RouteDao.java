@@ -27,14 +27,14 @@ public class RouteDao {
 		mTRdao = TransRouteMainDao.getInstance(ctx);
 	}
 	
-	public long insertRoute(String routeName,RouteStation[] routes){
+	public long insertRoute(String routeName,RouteStation[] stations){
 		
         ContentValues rowValues = new ContentValues();
         rowValues.put(KEY_NAME, routeName);
 
         long routeId = mTRdao.mDb.insert(ROUTE_TABLE, null, rowValues);
         
-        for (RouteStation routeStation : routes) {
+        for (RouteStation routeStation : stations) {
 
             rowValues = new ContentValues();
             rowValues.put(COST, routeStation.getCost());
@@ -44,16 +44,22 @@ public class RouteDao {
             StationDao sDao = new StationDao(mTRdao);
             Cursor station = sDao.fetchStations(routeStation.getNameStation());
             if (station.getCount() == 0){
-            	sDao.createStation(routeStation.getNameStation(), "0", "0");
+            	sDao.createStation(routeStation.getNameStation(), ""+routeStation.getCost(), ""+routeStation.getWaitCost());
             	station = sDao.fetchStations(routeStation.getNameStation());
             }
             int stationIdIndex = station.getColumnIndexOrThrow(StationDao.KEY_ROWID);
-            long stationId = station.getLong(stationIdIndex);
+            
+            station.moveToFirst(); 
+            
+            String tempStr = station.getString(stationIdIndex);
+            
+            long stationId = Long.parseLong(tempStr);
             
             rowValues.put(ID_STATION, stationId);
             
             //long routeStationId = 
             mTRdao.mDb.insert(ROUTE_STATION_TABLE, null, rowValues);
+            station.close();
 		}
         
 		return routeId;

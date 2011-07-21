@@ -1,5 +1,6 @@
 package com.hitojaguar.transroute;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
@@ -8,10 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.hitojaguar.transroute.dataaccess.dao.TransRouteMainDao;
+import com.hitojaguar.transroute.dataaccess.importing.FileLoader;
 import com.hitojaguar.transroute.entities.Result;
 import com.hitojaguar.transroute.route.IRouteCalculator;
 import com.hitojaguar.transroute.route.RouteCalculator;
@@ -61,6 +62,13 @@ public class TransRoute extends Activity {
             	mExpandListAdapter.notifyDataSetChanged();
             }
         });
+
+		Button importButton = (Button) findViewById(R.id.import1);
+		importButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	importFile();
+            }
+		});
 		
 		mDao = TransRouteMainDao.getInstance(this);
 		try {
@@ -104,4 +112,9 @@ public class TransRoute extends Activity {
     	mResult = rc.FindRoutes(source, destination);
     	mExpandListAdapter.changeResult(mResult);
     }
+    
+    private void importFile() {
+    	FileLoader fl = new FileLoader(this);
+    	fl.load(new File("/sdcard/rutas.csv"));
+	}
 }
