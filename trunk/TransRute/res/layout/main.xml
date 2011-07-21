@@ -41,6 +41,7 @@
 	    android:layout_height="wrap_content"
 		android:layout_weight="1">
     </ExpandableListView>
+    <Button android:text="Import" android:id="@+id/import1" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 	
 	<Button android:id="@+id/confirm" 
 	  android:text="@string/calculate"

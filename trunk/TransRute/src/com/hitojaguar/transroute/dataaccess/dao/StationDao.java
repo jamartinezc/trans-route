@@ -83,7 +83,7 @@ public class StationDao {
         Cursor mCursor =
 
             mTRdao.mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                    KEY_NAME, KEY_LAT, KEY_LON}, KEY_NAME + "=" + name, null,
+                    KEY_NAME, KEY_LAT, KEY_LON}, KEY_NAME + "=\"" + name + "\"", null,
                     null, null, null, null);
         return mCursor;
 

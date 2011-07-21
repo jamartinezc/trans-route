@@ -12,21 +12,19 @@ import com.hitojaguar.transroute.dataaccess.dao.RouteDao;
 import com.hitojaguar.transroute.entities.RouteStation;
 
 public class FileLoader {
-	private static Context ctx;
+	private  Context ctx;
 	
 	public FileLoader(Context pCtx){
 		ctx=pCtx;
 	}
 
-	public static void load(File file) {
+	public  void load(File file) {
 
 		try {
 			BufferedReader fileB = new BufferedReader(new FileReader(file));
 			String line;
 			int noSchedules;
 			String routeName; 
-			
-			
 			
 			// Find noSchedules
 			line = fileB.readLine();
@@ -40,10 +38,15 @@ public class FileLoader {
 				String[] row = line.split(";"); 
 				routeName = row[0];
 
-				RouteStation[] routes = new RouteStation[row.length - noSchedules+1];
-				for (int k = noSchedules+1; k < row.length; k++) {
+				RouteStation[] routes = new RouteStation[(row.length - noSchedules - 2)/3];// Name;Shcedule1;Shcedule2;...;ShceduleN;#;Station1;cost1;Wcost1....
+				int l = 0;
+				for (int k = noSchedules+2; k < row.length; k=k+3) {
 					String stationName = row[k];
-					//stations TODO RouteDao.insertRoute
+					routes[l] = new RouteStation();
+					routes[l].setNameStation(stationName);
+					routes[l].setCost(Float.parseFloat(row[k+1]));
+					routes[l].setWaitCost(Float.parseFloat(row[k+2]));
+					l++;
 				}
 				routeD.insertRoute(routeName, routes);
 			}
@@ -53,6 +56,9 @@ public class FileLoader {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NumberFormatException e){
+			// TODO File format Error
 			e.printStackTrace();
 		}
 	}
