@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
@@ -114,7 +115,13 @@ public class TransRoute extends Activity {
     }
     
     private void importFile() {
+    	
+    	
+    	//Intent fci = Intent.createChooser(new Intent(Intent.ACTION_GET_CONTENT), "text/csv");
+    	//this.sendBroadcast(fci);
+    	
+    	
     	FileLoader fl = new FileLoader(this);
-    	fl.load(new File("/sdcard/rutas.csv"));
+    	fl.load(new File("/mnt/sdcard/rutas.csv"));
 	}
 }
