@@ -44,6 +44,7 @@ public class RouteDao {
             StationDao sDao = new StationDao(mTRdao);
             Cursor station = sDao.fetchStations(routeStation.getNameStation());
             if (station.getCount() == 0){
+            	station.close();
             	sDao.createStation(routeStation.getNameStation(), ""+routeStation.getCost(), ""+routeStation.getWaitCost());
             	station = sDao.fetchStations(routeStation.getNameStation());
             }
