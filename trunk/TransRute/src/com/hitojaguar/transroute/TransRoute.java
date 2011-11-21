@@ -119,7 +119,10 @@ public class TransRoute extends Activity {
     	
     	//Intent fci = Intent.createChooser(new Intent(Intent.ACTION_GET_CONTENT), "text/csv");
     	//this.sendBroadcast(fci);
-    	
+    	Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        i.setType("*/*");
+        startActivityForResult(Intent.createChooser(i, null), 1);
     	
     	FileLoader fl = new FileLoader(this);
     	fl.load(new File("/mnt/sdcard/rutas.csv"));
