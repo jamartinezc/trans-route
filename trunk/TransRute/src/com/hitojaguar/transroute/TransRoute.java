@@ -20,6 +20,9 @@ import com.hitojaguar.transroute.route.RouteCalculator;
 import com.hitojaguar.transroute.widgets.extend.ResultExpandableListAdapter;
 
 public class TransRoute extends Activity {
+	
+	private static final int LOAD_FILE = 1;
+	
     private static final String SOURCE = "source";
     private static final String DEST = "destination";
     private static final String RES = "r";
@@ -116,15 +119,23 @@ public class TransRoute extends Activity {
     
     private void importFile() {
     	
-    	
-    	//Intent fci = Intent.createChooser(new Intent(Intent.ACTION_GET_CONTENT), "text/csv");
-    	//this.sendBroadcast(fci);
     	Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         i.setType("*/*");
-        startActivityForResult(Intent.createChooser(i, null), 1);
+        startActivityForResult(Intent.createChooser(i, null), LOAD_FILE);
     	
-    	FileLoader fl = new FileLoader(this);
-    	fl.load(new File("/mnt/sdcard/rutas.csv"));
 	}
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	
+    	switch(requestCode){
+    	case LOAD_FILE: {
+    		if(data != null){
+    		FileLoader fl = new FileLoader(this);
+        	fl.load(new File(data.getData().getPath()));
+    		}
+    	}
+    	}
+    }
 }
