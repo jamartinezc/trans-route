@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -46,8 +48,13 @@ public class TransRoute extends Activity {
         mExpandListAdapter = new ResultExpandableListAdapter(mResult,this);
 		mExpandList.setAdapter(mExpandListAdapter);
 
-		EditText editSource = (EditText) findViewById(R.id.source);
-		EditText editDestination = (EditText) findViewById(R.id.destination );
+		AutoCompleteTextView editSource = (AutoCompleteTextView) findViewById(R.id.source);
+		AutoCompleteTextView editDestination = (AutoCompleteTextView) findViewById(R.id.destination );
+		String[] opts = new String[] {"Virrey","Venecia"};
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item,opts);
+		
+		editSource.setAdapter(adapter);
+		editDestination.setAdapter(adapter);
 		
 		editSource.setText(source);
 		editDestination.setText(destin);

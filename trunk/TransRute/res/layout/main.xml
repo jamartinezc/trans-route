@@ -15,7 +15,7 @@
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
 			    android:text="@string/source"/>
-			<EditText android:id="@+id/source" 
+			<AutoCompleteTextView android:id="@+id/source" 
             	android:gravity="right"
 			  	android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 				android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/destination"/>
-			<EditText android:id="@+id/destination" 
+			<AutoCompleteTextView android:id="@+id/destination" 
             	android:gravity="right"
 			 	android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
