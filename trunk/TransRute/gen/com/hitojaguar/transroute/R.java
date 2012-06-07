@@ -11,19 +11,26 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
+        public static final int default_bus=0x7f020000;
+        public static final int icon=0x7f020001;
     }
     public static final class id {
-        public static final int confirm=0x7f050003;
-        public static final int destination=0x7f050001;
-        public static final int result_view=0x7f050004;
-        public static final int results=0x7f050002;
-        public static final int rute_image=0x7f050005;
-        public static final int source=0x7f050000;
+        public static final int confirm=0x7f060007;
+        public static final int destination=0x7f060004;
+        public static final int destination_lbl=0x7f060003;
+        public static final int import1=0x7f060006;
+        public static final int list_item=0x7f060000;
+        public static final int result_view=0x7f060008;
+        public static final int results=0x7f060005;
+        public static final int rute_image=0x7f060009;
+        public static final int source=0x7f060002;
+        public static final int source_lbl=0x7f060001;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
-        public static final int result_view=0x7f030001;
+        public static final int list_item=0x7f030000;
+        public static final int main=0x7f030001;
+        public static final int main_ics=0x7f030002;
+        public static final int result_view=0x7f030003;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
@@ -31,5 +38,11 @@ public final class R {
         public static final int destination=0x7f040002;
         public static final int expandable_list_sample_action=0x7f040004;
         public static final int source=0x7f040001;
+    }
+    public static final class style {
+        /**  Any customizations for your app running on pre-3.0 devices here 
+ Any customizations for your app running on devices with Theme.Holo here 
+         */
+        public static final int MyTheme=0x7f050000;
     }
 }

@@ -6,4 +6,6 @@ public interface IRouteCalculator {
 
 	public abstract Result FindRoutes(String source, String destination);
 
+	public abstract String[] getStations();
+
 }

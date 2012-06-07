@@ -38,7 +38,7 @@ public class TransRoute extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.main_ics);
         
         mResult = (savedInstanceState == null) ? new Result() : (Result) savedInstanceState.getSerializable(TransRoute.RES);
         String source = (savedInstanceState == null) ? "" : savedInstanceState.getString(TransRoute.SOURCE);
@@ -51,6 +51,7 @@ public class TransRoute extends Activity {
 		AutoCompleteTextView editSource = (AutoCompleteTextView) findViewById(R.id.source);
 		AutoCompleteTextView editDestination = (AutoCompleteTextView) findViewById(R.id.destination );
 		String[] opts = new String[] {"Virrey","Venecia"};
+
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item,opts);
 		
 		editSource.setAdapter(adapter);
@@ -91,6 +92,16 @@ public class TransRoute extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		//Inicializar las listas de estaciones
+    	IRouteCalculator rc = new RouteCalculator(this);
+    	
+		opts = rc.getStations();
+		adapter = new ArrayAdapter<String>(this, R.layout.list_item,opts);
+		
+		editSource.setAdapter(adapter);
+		editDestination.setAdapter(adapter);
     }
 
 	@Override
