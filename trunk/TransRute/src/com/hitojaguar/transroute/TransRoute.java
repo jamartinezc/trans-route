@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -28,6 +30,8 @@ public class TransRoute extends Activity {
     private static final String SOURCE = "source";
     private static final String DEST = "destination";
     private static final String RES = "r";
+
+	private static final int DIALOG_SEARCH = 0;
 	private ExpandableListView mExpandList;
 	private ResultExpandableListAdapter mExpandListAdapter;
 	private TransRouteMainDao mDao;
@@ -38,7 +42,7 @@ public class TransRoute extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_ics);
+        setContentView(R.layout.main);
         
         mResult = (savedInstanceState == null) ? new Result() : (Result) savedInstanceState.getSerializable(TransRoute.RES);
         String source = (savedInstanceState == null) ? "" : savedInstanceState.getString(TransRoute.SOURCE);
@@ -137,10 +141,12 @@ public class TransRoute extends Activity {
     
     private void importFile() {
     	
-    	Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-        i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("*/*");
-        startActivityForResult(Intent.createChooser(i, null), LOAD_FILE);
+    	showDialog(DIALOG_SEARCH);
+    	
+//    	Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+//        i.addCategory(Intent.CATEGORY_OPENABLE);
+//        i.setType("*/*");
+//        startActivityForResult(Intent.createChooser(i, null), LOAD_FILE);
     	
 	}
     
@@ -155,5 +161,21 @@ public class TransRoute extends Activity {
     		}
     	}
     	}
+    }
+    
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog;
+        switch(id) {
+        case DIALOG_SEARCH:
+        	Context mContext = getApplicationContext();
+        	dialog = new Dialog(this);
+
+        	dialog.setContentView(R.layout.search_dialog);
+        	dialog.setTitle("Custom Dialog");
+            break;
+        default:
+            dialog = null;
+        }
+        return dialog;
     }
 }
